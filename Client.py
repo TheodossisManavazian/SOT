@@ -12,7 +12,7 @@ try:
 except FileNotFoundError:
     from selenium import webdriver
 
-    with webdriver.Chrome(executable_path="../Externals/chromedriver") as driver:
+    with webdriver.Chrome(executable_path="/Users/theomanavazian/PycharmProjects/SOT/Externals/chromedriver") as driver:
         client = auth.client_from_login_flow(
             driver, api_key, redirect_uri, token_path)
 

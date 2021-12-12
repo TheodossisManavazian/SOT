@@ -5,3 +5,4 @@ matplotlib~=3.5.0
 numpy~=1.21.4
 mplfinance~=0.12.7a17
 tda-api=1.5
+scikit-learn~=1.0.1

@@ -261,6 +261,10 @@ class WelcomeWindow(Screen):
             self.ids.TNX_moChange.text = f"${round(self.indicesDict['$TNX.X']['1MonthChange'], 3)}"
             self.ids.TNX_moChangePercent.text = f"{round(self.indicesDict['$TNX.X']['Month%Change'], 3)}%"
 
+            # TODO:
+            #   Time series Prediction with NN
+            #   Portfolio risk management
+
         except Exception as e:
             # RESET FIELDS
             self.ids.name.text = f'invalid ticker: "{symbol.upper()}"'
@@ -284,17 +288,17 @@ class WelcomeWindow(Screen):
             self.ids.Score.text = "-"
             self.ids.Score.color = (1, 1, 1, 1)
             self.ids.peRatio.text = ""
-            self.ids.eps.text =""
-            self.ids.pbRatio.text =""
+            self.ids.eps.text = ""
+            self.ids.pbRatio.text = ""
             self.ids.prRatio.text = ""
-            self.ids.pcfRatio.text =""
-            self.ids.returnOnAssets.text =""
-            self.ids.returnOnEquity.text =""
-            self.ids.returnOnInvestment.text =""
+            self.ids.pcfRatio.text = ""
+            self.ids.returnOnAssets.text = ""
+            self.ids.returnOnEquity.text = ""
+            self.ids.returnOnInvestment.text = ""
             self.ids.quickRatio.text = ""
-            self.ids.currentRatio.text =""
-            self.ids.totalDebtToEquity.text =""
-            self.ids.beta.text =""
+            self.ids.currentRatio.text = ""
+            self.ids.totalDebtToEquity.text = ""
+            self.ids.beta.text = ""
             self.ids.DBC.text = ""
             self.ids.SPY.text = ""
             self.ids.DIA.text = ""
@@ -317,7 +321,6 @@ class WelcomeWindow(Screen):
             t.show_plot()
         except Exception as e:
             print("Invalid ticker,", e)
-
 
 
 # manages all the Screens we have

@@ -34,6 +34,9 @@ def set_rsi(df, periods=14):
 class Ticker:
     def __init__(self, client, ticker, yrs=""):
 
+        # TODO:
+        #   Fix price history so that TODAY's Price is included
+
         self.symbol = (ticker.upper()).replace('/', "")
 
         period = client.PriceHistory.Period.ONE_YEAR
@@ -269,7 +272,7 @@ class Ticker:
         start_date_epoch = datetime.datetime.strptime("01/01/1970", "%m/%d/%Y")
         date = (start_date_epoch + datetime.timedelta(days=int(days_since))).date().strftime("%m/%d/%Y")
 
-        tup = (self.symbol, date, close_price, set_rsi(self.cleanPriceHistory['close']), self.set_ema(15), set_moving_average( self.cleanPriceHistory['close'], 50),
-               set_moving_average(200), MACD[0], MACD[1], future_price)
+        tup = (self.symbol, date, close_price, set_rsi(self.cleanPriceHistory['close']), self.set_ema(15), set_moving_average(self.cleanPriceHistory['close'], 50),
+               set_moving_average(self.cleanPriceHistory['close'], 200), MACD[0], MACD[1], future_price)
         self.cleanPriceHistory = temp_history
         return tup
