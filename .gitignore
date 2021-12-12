@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+Externals/NOTES
+Externals/Token_path_Backup
+Kivy/Token_path
+SetCreator.py
+Unittests
+__pycache__
+config.py
+playground.py
+
