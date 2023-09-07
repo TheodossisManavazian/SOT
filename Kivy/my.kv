@@ -1,0 +1,716 @@
+# Configuration file for the GUI, its all just positions and elements on the canvas.
+
+<WindowHome>:
+    name: "home"
+
+    orientation: 'vertical'
+
+    canvas.before:
+        Color:
+            rgba:(2/255,22/255,74/255,.6)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+
+        Image:
+            source: 'sot_logo.png'
+            size_hint_x: .4
+            pos_hint:{"x": .3, "top":1.1}
+            allow_stretch: True
+
+        RoundedButton:
+            id: analyze
+            pos_hint:{"x": 0.25, "top":.15}
+            size_hint:0.2, .1
+            text: "Analyze"
+            on_release:
+                root.manager.current = 'analyze'
+
+        RoundedButton:
+            id: trade
+            pos_hint:{"x": 0.55, "top":.15}
+            size_hint:0.2, .1
+            text: "Trade"
+            on_release:
+                root.manager.current = 'trade'
+
+
+<WindowTrade>:
+    name: "trade"
+
+    canvas.before:
+        Color:
+            rgba:(2/255,22/255,74/255,.6)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        size: (root.width, root.height)
+        size_hint_x: None
+        size_hint_y: None
+
+        RoundedButton:
+            pos_hint:{"x": 0.01, "top":.99}
+            size_hint:0.1, 0.05
+            text: "Back"
+            on_release:
+                root.manager.current = 'home'
+
+
+        NiceText:
+            id: symbol
+            pos_hint:{"x": 0.3, "top":.95}
+            size_hint: 0.2, .05
+            multiline: False
+            hint_text: "Enter Ticker Symbol"
+
+        RoundedButton:
+            id: load_ticker
+            pos_hint:{"x": 0.5, "top":.95}
+            size_hint:0.2, .05
+            text: "Load Ticker"
+            on_release:
+                root.update_ticker()
+
+        NiceLabel:
+            pos_hint:{"x": 0.05, "top":.90}
+            text: "Available Funds:"
+
+        NiceLabel:
+            id: available_funds
+            color: 0,1,0,.8
+            pos_hint:{"x": 0.20, "top":.90}
+
+        NiceLabel:
+            pos_hint:{"x": 0.05, "top":.80}
+            text: "Last Price:"
+
+        NiceLabel:
+            id: last_price
+            color: 0,1,0,.8
+            pos_hint:{"x": 0.20, "top":.80}
+
+
+        RoundedButton:
+            id: execute_buy
+            pos_hint:{"x": 0.25, "top":.15}
+            size_hint:0.2, .05
+            text: "Buy"
+            on_release:
+                root.execute_buy()
+
+        RoundedButton:
+            id: execute_sell
+            pos_hint:{"x": 0.55, "top":.15}
+            size_hint:0.2, .05
+            text: "Sell"
+            on_release:
+                root.execute_sell()
+
+
+
+
+<WindowAnalyze>:
+    name: "analyze"
+
+    canvas.before:
+        Color:
+            rgba:(2/255,22/255,74/255,.6)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    ScrollView:
+        size_hint_y:.8
+        size_hint_x:1
+        pos_hint:{"x": 0, "top":.9}
+        do_scroll_x: False
+        do_scroll_y: True
+
+        FloatLayout:
+            size: (root.width, root.height * 2)
+            size_hint_x: None
+            size_hint_y: None
+
+            # ROW 1
+            NiceLabel:
+                pos_hint:{"x": 0.12, "top":1}
+                size_hint:0.25, 0.05
+                color : 1, .9, 0, 1
+                text: "Quick Quote:"
+
+            NiceLabel:
+                pos_hint:{"x": 0.62, "top":1}
+                size_hint:0.25, 0.05
+                color : 1, .9, 0, 1
+                text: "Technical Analysis:"
+
+          # Row 2
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.98}
+                text: "Last Price:"
+
+            NiceLabel:
+                id: price
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.98}
+
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.98}
+                text: "RSI:"
+
+            NiceLabel:
+                id: RSI
+                pos_hint:{"x": 0.70, "top":.98}
+                text: "-"
+
+        # ROW 3
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.96}
+                text: "Net Change:"
+
+            NiceLabel:
+                id: netChange
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.96}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.96}
+                text: "MACD:"
+
+            NiceLabel:
+                id: MACD
+                pos_hint:{"x": 0.70, "top":.96}
+                size_hint:0.25, 0.05
+                text: "-"
+
+
+        # ROW 4
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.94}
+                text: "Percent Change:"
+
+            NiceLabel:
+                id: percentChange
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.94}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.94}
+                text: "200 MA:"
+
+            NiceLabel:
+                id: MA200
+                pos_hint:{"x": 0.70, "top":.94}
+                text: "-"
+
+           # ROW 5
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.92}
+                text: "52 week High:"
+
+            NiceLabel:
+                id: wkHigh
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.92}
+
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.92}
+                text: "50 MA:"
+
+            NiceLabel:
+                id: MA50
+                pos_hint:{"x": 0.70, "top":.92}
+                text: "-"
+
+         # ROW 6
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.90}
+                text: "52 Week Low:"
+
+            NiceLabel:
+                id: wkLow
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.90}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.90}
+                text: "15 EMA:"
+
+            NiceLabel:
+                id: EMA15
+                pos_hint:{"x": 0.70, "top":.90}
+                text: "-"
+
+        # ROW 7
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.88}
+                text: "Market Cap:"
+
+            NiceLabel:
+                id: mktCap
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.88}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.88}
+                text: "Resistance:"
+
+            NiceLabel:
+                id: Resistance
+                pos_hint:{"x": 0.70, "top":.88}
+                text: "-"
+
+        # ROW 8
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.86}
+                text: "Volume:"
+
+            NiceLabel:
+                id: vol
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.86}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.86}
+                text: "Support:"
+
+            NiceLabel:
+                id: Support
+                pos_hint:{"x": 0.70, "top":.86}
+                text: "-"
+
+          # ROW 9
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.84}
+                text: "Vol 10 Day Avg:"
+
+            NiceLabel:
+                id: avgVol
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.84}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.84}
+                text: "Score:"
+
+            NiceLabel:
+                id: Score
+                pos_hint:{"x": 0.70, "top":.84}
+                text: "-"
+
+
+            # ROW 10
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.82}
+                text : "Dividend Yield:"
+
+            NiceLabel:
+                id: divYield
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top": .82}
+                size_hint:0.35, 0.05
+
+
+           # Row 11
+            NiceLabel:
+                pos_hint:{"x": 0.12, "top":.78}
+                size_hint:0.25, 0.05
+                color : 1, .9, 0, 1
+                text: "Fundamental Analysis:"
+
+            NiceLabel:
+                pos_hint:{"x": 0.62, "top":.78}
+                size_hint:0.25, 0.05
+                color : 1, .9, 0, 1
+                text: "Inter-Market Correlations:"
+
+            # Row 12
+            NiceLabel:
+                id: DBC
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.76}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.76}
+                text: "DBC:"
+
+            NiceLabel:
+                id: eps
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.20, "top":.76}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.76}
+                text: "EPS TTM:"
+
+            # Row 13
+            NiceLabel:
+                id: peRatio
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.74}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.74}
+                text: "PE Ratio:"
+            NiceLabel:
+                id: SPY
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.74}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.74}
+                text: "SPY:"
+
+            # Row 14
+            NiceLabel:
+                id: pbRatio
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.72}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.72}
+                text: "PB Ratio:"
+
+            NiceLabel:
+                id: DIA
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.72}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.72}
+                text: "DIA:"
+
+
+            # Row 15
+            NiceLabel:
+                id: prRatio
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.70}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.70}
+                text: "PR Ratio"
+
+            NiceLabel:
+                id: QQQ
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.70}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.70}
+                text: "QQQ:"
+
+
+            # Row 16
+            NiceLabel:
+                id: pcfRatio
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.68}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.68}
+                text: "PCF Ratio:"
+
+            NiceLabel:
+                id: GLD
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.68}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.68}
+                text: "GLD:"
+
+            # Row 17
+            NiceLabel:
+                id: returnOnAssets
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.66}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.66}
+                text: "ROA:"
+
+            NiceLabel:
+                id: CPER
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.66}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.66}
+                text: "CPER:"
+
+            # Row 18
+            NiceLabel:
+                id: returnOnEquity
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.64}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.64}
+                text: "ROE:"
+
+            NiceLabel:
+                id: XME
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.64}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.64}
+                text: "XME:"
+            # Row 19
+            NiceLabel:
+                id: returnOnInvestment
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.62}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.62}
+                text: "ROI:"
+
+            NiceLabel:
+                id: UCO
+                color: 0, 1, 0, 0.8
+                pos_hint:{"x": 0.70, "top":.62}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.62}
+                text: "UCO:"
+
+            # Row 20
+            NiceLabel:
+                id: quickRatio
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.60}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.60}
+                text: "Quick Ratio:"
+
+            NiceLabel:
+                id: VIX
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.70, "top":.60}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.60}
+                text: "VIX:"
+
+            # Row 21
+            NiceLabel:
+                id: currentRatio
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.58}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.58}
+                text: "Current Ratio:"
+
+            NiceLabel:
+                id: TNX
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.70, "top":.58}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.58}
+                text: "TNX:"
+            # Row 22
+            NiceLabel:
+                id: totalDebtToEquity
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.56}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.56}
+                text: "Total DTE:"
+
+            # Row 21
+            NiceLabel:
+                id: beta
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.54}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.54}
+                text: "Beta:"
+
+            # Row 22
+            NiceLabel:
+                pos_hint:{"x": 0.375, "top":.52}
+                size_hint:0.25, 0.05
+                color : 1, .9, 0, 1
+                valign: 'middle'
+                text: "Sentiment Analysis:"
+
+            # Row 23
+            NiceLabel:
+                pos_hint:{"x": 0.20, "top":.50}
+                size_hint:0.30, 0.05
+                color : 1, .9, 0, 1
+                text: "Volatility Index (VIX):"
+
+            NiceLabel:
+                pos_hint:{"x": 0.60, "top":.50}
+                color : 1, .9, 0, 1
+                size_hint:0.30, 0.05
+                text: "10 Year Treasury Yield (TNX):"
+
+            # Row 21
+            NiceLabel:
+                id: VIX_last
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.48}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.48}
+                text: "Last:"
+
+            NiceLabel:
+                id: TNX_last
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.70, "top":.48}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.48}
+                text: "Last:"
+
+
+            # Row 25
+            NiceLabel:
+                id: VIX_moChange
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.46}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.46}
+                text: "1 Month Change:"
+
+            NiceLabel:
+                id: TNX_moChange
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.70, "top":.46}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.46}
+                text: "1 Month Change:"
+
+            # Row 25
+            NiceLabel:
+                id: VIX_moChangePercent
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.20, "top":.44}
+
+            NiceLabel:
+                pos_hint:{"x": 0.05, "top":.44}
+                text: "Change %:"
+
+            NiceLabel:
+                id: TNX_moChangePercent
+                color: 0,1,0,.8
+                pos_hint:{"x": 0.70, "top":.44}
+
+            NiceLabel:
+                pos_hint:{"x": 0.55, "top":.44}
+                text: "Change %:"
+
+
+
+            # Row 26
+            # NiceLabel:
+            #     pos_hint:{"x": 0.40, "top":.35}
+            #     size_hint:0.20, 0.05
+            #     color : 1, .9, 0, 1
+            #     text: "Settings:"
+
+            # Row 27
+            #Spinner:
+            #    pos_hint:{"x": 0.35, "top":.30}
+            #    size_hint: 0.20, .04
+
+            #    id: period
+            #    text: "Select Chart Period"
+            #    values : ["1 Year", "2 Years", "5 Years", "10 Years", "20 Years"]
+
+            #    #on_text: root.plot(period.text)
+
+
+            # Row 28
+            NiceLabel:
+                pos_hint:{"x": 0.375, "top":.20}
+                size_hint:0.25, 0.05
+                valign:'middle'
+                color : 1, .9, 0, 1
+                text: "Portfolio-Risk Manager:"
+
+            NiceLabel:
+                pos_hint:{"x": 0.375, "top":.15}
+                size_hint:0.25, 0.05
+                valign:'middle'
+                color : 1, .9, 0, 1
+                text: "--coming soon--"
+
+    FloatLayout:
+        size_hint_y:.1
+        pos_hint:{"x": 0, "top":.95}
+
+        Label:
+            id: name
+            pos_hint:{"x": 0.2, "top":.95}
+            size_hint:0.6, .5
+
+
+    FloatLayout:
+        size_hint_y:.1
+        pos_hint:{"x": 0, "top":.2}
+
+        NiceText:
+            id: symbol
+            pos_hint:{"x": 0.3, "top":0}
+            size_hint:0.2, .5
+            multiline: False
+            hint_text: "Enter Ticker Symbol"
+
+        RoundedButton:
+            id: analyze
+            pos_hint:{"x": 0.5, "top":0}
+            size_hint:0.1, .5
+            text: "Analyze"
+            on_release:
+                root.anlz()
+        RoundedButton:
+            id: plot
+            pos_hint:{"x": 0.6, "top":0}
+            size_hint:0.1, .5
+            text: "Plot"
+            on_release:
+                root.plot()
+
+<NiceLabel@Label>
+    size_hint: 0.15, 0.05
+    text_size: self.size
+    valign:'middle'
+    halign:"left"
+
+<RoundedButton@Button>
+    background_color: 0,0,0,0
+    background_normal: ''
+    canvas:
+        Color:
+            rgba:(1,1,1,.1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [12]
+
+<NiceText@TextInput>
+    background_color: 1,1,1,.05
+    on_text: self.foreground_color = (3/255,123/255,143/255,1)##blue
+
+

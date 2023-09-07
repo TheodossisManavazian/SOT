@@ -1,0 +1,14 @@
+pandas~=1.3.4
+Kivy~=2.0.0
+selenium~=4.1.0
+matplotlib~=3.5.0
+numpy~=1.21.4
+mplfinance~=0.12.7a17
+tda-api~=1.5
+scikit-learn~=1.0.1
+uvicorn[standard]~=0.20.0
+fastapi~=0.88.0
+sqlalchemy~=1.4.44
+psycopg2-binary
+pydash~=5.1.2
+pydantic~=1.10.2
