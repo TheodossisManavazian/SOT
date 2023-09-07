@@ -168,4 +168,4 @@ chains.json
 sql/
 sot_service/jaat_strategies/SPY_intraday_sample.csv
 externals/
-#config.py
+config.py
